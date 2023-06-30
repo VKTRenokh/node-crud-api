@@ -1,13 +1,30 @@
 {
   "compilerOptions": {
-    "outDir": "dist",
+    "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
-    "noImplicitAny": true,
-    "module": "CommonJS",
-    "moduleResolution": "node",
+    "useUnknownInCatchVariables": false,
+    "useDefineForClassFields": true,
+    "allowJs": false,
+    "esModuleInterop": false,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "rootDir": "src",
+    "outDir": "dist",
+    "sourceMap": true,
     "target": "es6",
-    "allowJs": true,
-    "sourceMap": true
+    "noImplicitAny": true,
+    "inlineSources": true,
+    "strict": true,
+    "noEmit": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": false,
+    "noFallthroughCasesInSwitch": true,
+    "paths": {
+      "@/*": ["./src/*"]
+    }
   },
-  "files": ["./src/index.ts"]
+  "include": ["src/**/*.ts", "src/**/*.js", "custom.d.ts"],
+  "exclude": ["node_modules"],
+  "compileOnSave": false
 }

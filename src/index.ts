@@ -1,5 +1,8 @@
 import * as http from "http";
+import * as dotenv from "dotenv";
 import { Users } from "./users/users";
+
+dotenv.config();
 
 const users = new Users();
 
@@ -12,4 +15,4 @@ const server = http.createServer((req, res) => {
   res.end("not found");
 });
 
-server.listen(8080);
+server.listen(process.env.PORT);
