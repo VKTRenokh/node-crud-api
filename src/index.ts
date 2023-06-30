@@ -1,11 +1,15 @@
 import * as http from "http";
-import * as crypto from "crypto";
-import { User, UserServer } from "./types/User";
+import { Users } from "./users/users";
 
-const users: UserServer[] = [];
+const users = new Users();
 
 const server = http.createServer((req, res) => {
-  res.end(crypto.randomUUID({ disableEntropyCache: true }));
+  if (req.url?.startsWith("/api/users")) {
+    users.handleRequest(req, res);
+    return;
+  }
+  res.writeHead(404);
+  res.end("not found");
 });
 
 server.listen(8080);
