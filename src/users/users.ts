@@ -10,6 +10,11 @@ export class Users {
     this.users = [];
   }
 
+  getUUIDFromPath(path: string) {
+    console.log(path.slice(path.lastIndexOf("/") + 1));
+    return path.slice(path.lastIndexOf("/") + 1);
+  }
+
   isUUIDValid(str: string) {
     const uuidRegex =
       /^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$/gi;
@@ -30,13 +35,17 @@ export class Users {
 
     const userIndex = this.users.findIndex((user) => user.id === uuid);
 
-    if (!userIndex) {
+    if (userIndex === -1) {
       res.writeHead(404);
       res.end("user was not found");
       return;
     }
 
+    console.table(this.users[userIndex]);
+
     this.users.slice(userIndex, 1);
+    res.writeHead(204);
+    res.end();
   }
 
   push(res: http.ServerResponse, user: User) {
@@ -82,8 +91,13 @@ export class Users {
 
   handleRequest(req: http.IncomingMessage, res: http.ServerResponse) {
     if (req.method === "POST") {
+      const chunks: Uint8Array[] = [];
+
       req.on("data", (chunk) => {
-        this.push(res, JSON.parse(chunk));
+        chunks.push(chunk);
+      });
+      req.on("end", () => {
+        this.push(res, JSON.parse(Buffer.concat(chunks).toString()));
       });
       return;
     }
@@ -94,6 +108,29 @@ export class Users {
     }
 
     if (req.method === "PUT") {
+      const chunks: Uint8Array[] = [];
+
+      req.on("data", (chunk) => {
+        chunks.push(chunk);
+      });
+
+      req.on("end", () => {
+        if (!req.url) {
+          return;
+        }
+        this.update(
+          res,
+          this.getUUIDFromPath(req.url),
+          JSON.parse(Buffer.concat(chunks).toString())
+        );
+      });
+    }
+
+    if (req.method === "DELETE") {
+      if (!req.url) {
+        return;
+      }
+      this.delete(res, this.getUUIDFromPath(req.url));
     }
   }
 }
