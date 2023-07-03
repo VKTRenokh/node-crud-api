@@ -6,6 +6,10 @@ import { URL } from "url";
 import * as http from "http";
 import { User } from "@/types/User";
 
+cluster.on("error", (worker, error) => {
+  console.error(`Worker ${worker.process.pid} encountered an error: ${error}`);
+});
+
 export class Balancer {
   serverIndex: number;
   workers: { worker: Worker; port: number }[];
