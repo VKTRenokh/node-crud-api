@@ -9,13 +9,11 @@ import { User } from "@/types/User";
 
 export class Balancer {
   serverIndex: number;
-  users: User[];
   workers: { worker: cluster.Worker; port: number }[];
 
   constructor(port: number) {
     const cpus = os.availableParallelism();
     this.workers = [];
-    this.users = [];
 
     this.serverIndex = 0;
 
