@@ -1,15 +1,14 @@
-import { Worker } from "worker_threads";
 import * as os from "os";
 import { Crud } from "../crud/crud";
-import * as path from "path";
-import * as cluster from "cluster";
+import cluster from "cluster";
+import { Worker } from "cluster";
 import { URL } from "url";
 import * as http from "http";
 import { User } from "@/types/User";
 
 export class Balancer {
   serverIndex: number;
-  workers: { worker: cluster.Worker; port: number }[];
+  workers: { worker: Worker; port: number }[];
 
   constructor(port: number) {
     const cpus = os.availableParallelism();
@@ -17,10 +16,14 @@ export class Balancer {
 
     this.serverIndex = 0;
 
-    if (cluster.default.isPrimary) {
+    if (cluster.isPrimary) {
+      console.log("hi");
+    }
+
+    if (cluster.isPrimary) {
       for (let i = 0; i < cpus; i++) {
         const PORT = port + (i + 1);
-        const fork = cluster.default.fork({ PORT });
+        const fork = cluster.fork({ PORT });
         this.workers.push({ port: PORT, worker: fork });
         fork.on("message", (message) => {
           if (!("users" in message) || !("pid" in message)) {

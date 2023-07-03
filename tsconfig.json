@@ -15,6 +15,7 @@
     "inlineSources": true,
     "strict": true,
     "noEmit": true,
+    "module": "commonjs",
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": false,
