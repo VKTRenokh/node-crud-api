@@ -6,8 +6,8 @@
   "scripts": {
     "start:dev": "ts-node-dev ./src/index.ts",
     "start:dev:multi": "ts-node-dev ./src/index.ts -- --multi",
-    "start": "ts-node ./src/index.ts",
-    "start:multi": "ts-node ./src/index.ts --multi"
+    "start:prod": "ts-node ./src/index.ts",
+    "start:prod:multi": "ts-node ./src/index.ts --multi"
   },
   "keywords": [],
   "author": "",
