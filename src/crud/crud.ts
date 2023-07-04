@@ -57,7 +57,7 @@ export class Crud {
       return;
     }
 
-    this.users.slice(userIndex, 1);
+    this.users.splice(userIndex, 1);
     res.writeHead(204);
     res.end();
 
@@ -107,6 +107,9 @@ export class Crud {
     obj.id = this.users[userIndex].id;
 
     this.users[userIndex] = obj;
+
+    res.writeHead(200);
+    res.end(this.users[userIndex]);
 
     if (!this.onUserUpdate) {
       return;
