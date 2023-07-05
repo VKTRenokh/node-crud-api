@@ -1,0 +1,21 @@
+{
+  "name": "crud-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./src/index.ts",
+  "scripts": {
+    "start:dev": "ts-node-dev ./src/index.ts",
+    "start:dev:multi": "ts-node-dev ./src/index.ts -- --multi",
+    "start:prod": "ts-node ./src/index.ts",
+    "start:prod:multi": "ts-node ./src/index.ts --multi"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "ts-node": "^10.9.1",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.1.6"
+  }
+}
